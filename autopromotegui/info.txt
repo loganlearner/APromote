@@ -1,0 +1,10 @@
+"AddonInfo"
+{
+	"name"		"APromoteGUI"
+	"version"	"1.0 - Beta"
+	"author_name"	"Lead4u2"
+	"author_email"	"j_g_24@hotmail.com"
+	"author_url"	"N/A"
+	
+	"info"		"Gui AutoPromote for ULX Administration addon."
+}
