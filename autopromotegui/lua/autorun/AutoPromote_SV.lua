@@ -16,9 +16,9 @@ local function loadAP()
 	else 
 		glonGroup = glon.decode(file.Read( "autoPromote/data.txt" ))
 	end
-	ULib.replicatedWritableCvar("ap_enabled","rep_ap_enabled",GetConVarNumber( "ap_enabled" ),false,true,"xgui_svsettings")
-	ULib.replicatedWritableCvar("ap_voice_enabled","rep_ap_voice_enabled",GetConVarNumber( "ap_voice_enabled" ),false,true,"xgui_svsettings")
-	ULib.replicatedWritableCvar("ap_voice_scope","rep_ap_voice_scope",GetConVarNumber( "ap_voice_scope" ),false,true,"xgui_svsettings")
+	ULib.replicatedWritableCvar("ap_enabled","rep_ap_enabled",GetConVarNumber( "ap_enabled" ),true,true,"xgui_svsettings")
+	ULib.replicatedWritableCvar("ap_voice_enabled","rep_ap_voice_enabled",GetConVarNumber( "ap_voice_enabled" ),true,true,"xgui_svsettings")
+	ULib.replicatedWritableCvar("ap_voice_scope","rep_ap_voice_scope",GetConVarNumber( "ap_voice_scope" ),true,true,"xgui_svsettings")
 end
 hook.Add( "InitPostEntity", "loadAPGUI", loadAP )
 
@@ -94,13 +94,11 @@ if(	ply:IsBot( ) or !ply:IsValid() ) then return end
 			PlayRankSound( ply );
 			return;
 		end
-	else
-		print( ply:Nick().." is already at the correct ".. tostring(Rank))
 	end
 end
 
 timer.Create("doAPUpdateTimer",10,0, function()
-if( GetConVarNumber( "ap_enabled" ) != 1) then print("no") return end
+if( GetConVarNumber( "ap_enabled" ) != 1) then return end
 	for k, v in pairs(player.GetAll()) do
 		ULib.queueFunctionCall(	checkPlayer, v) 
 	end
