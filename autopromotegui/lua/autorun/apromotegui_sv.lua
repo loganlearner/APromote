@@ -2,7 +2,7 @@
 // APromoteGUI by Lead4u    //
 // Mail: J_G_24@hotmail.com //
 // Steam: Lead4u2           //
-// Version: 1.0 Beta        //
+// Version: 1.1 Beta        //
 ------------------------------
 require( "glon" )
 local glonGroup = {};
@@ -19,6 +19,7 @@ local function loadAP()
 		glonGroup["set"]["ap_enabled"] = 1
 		glonGroup["set"]["ap_snd_enabled"] = 1
 		glonGroup["set"]["ap_snd_scope"] = 1
+		glonGroup["set"]["ap_effect_enabled"] = 1
 		file.Write("autoPromote/data.txt", glon.encode(glonGroup))
 	else 
 		glonGroup = glon.decode(file.Read( "autoPromote/data.txt" ))
@@ -26,11 +27,12 @@ local function loadAP()
 	ULib.replicatedWritableCvar("ap_enabled","rep_ap_enabled", glonGroup["set"]["ap_enabled"],false,false,"xgui_svsettings")
 	ULib.replicatedWritableCvar("ap_snd_enabled","rep_ap_snd_enabled",glonGroup["set"]["ap_snd_enabled"] ,false,false,"xgui_svsettings")
 	ULib.replicatedWritableCvar("ap_snd_scope","rep_ap_snd_scope",glonGroup["set"]["ap_snd_scope"] ,false,false,"xgui_svsettings")
+	ULib.replicatedWritableCvar("ap_effect_enabled","rep_ap_effect_enabled",glonGroup["set"]["ap_effect_enabled"] ,false,false,"xgui_svsettings")
 end
 hook.Add( "InitPostEntity", "loadAPGUI", loadAP )
 
 function cVarChange( sv_cvar, cl_cvar, ply, old_val, new_val )
-	if ( sv_cvar =="ap_enabled" or sv_cvar=="ap_snd_enabled" or sv_cvar=="ap_snd_scope" ) then
+	if ( sv_cvar =="ap_enabled" or sv_cvar=="ap_snd_enabled" or sv_cvar=="ap_snd_scope" or sv_cvar=="ap_effect_enabled" ) then
 		glonGroup["set"][sv_cvar] = new_val
 		file.Write("autoPromote/data.txt", glon.encode(glonGroup))
 	end
@@ -38,6 +40,11 @@ end
 hook.Add( "ULibReplicatedCvarChanged", "APGroupCVAR", cVarChange )
 
 local function PlayRankSound( ply )
+	if ( GetConVarNumber( "ap_effect_enabled" ) == 1 ) then
+		umsg.Start("doApShinys")
+			umsg.Entity( ply )
+		umsg.End()
+	end
 	if ( GetConVarNumber( "ap_snd_enabled" ) == 1) then
 		if ( GetConVarNumber( "ap_snd_scope" ) == 1 ) then
 			for k, v in pairs(player.GetAll()) do
