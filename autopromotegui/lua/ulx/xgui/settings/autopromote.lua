@@ -8,8 +8,8 @@
 local panel = xlib.makepanel{ parent=xgui.null }
 // AP Settings
 local enabled = xlib.makecheckbox{ x=10, y=10, label="Enable", repconvar="rep_ap_enabled", parent=panel, textcolor=color_black }
-xlib.makecheckbox{ x=10, y=30, label="Play Sound", repconvar="rep_ap_voice_enabled", parent=panel, textcolor=color_black }
-xlib.makecheckbox{ x=25, y=50, label="Global Sound", repconvar="rep_ap_voice_scope", parent=panel, textcolor=color_black }
+xlib.makecheckbox{ x=10, y=30, label="Play Sound", repconvar="rep_ap_snd_enabled", parent=panel, textcolor=color_black }
+xlib.makecheckbox{ x=25, y=50, label="Global Sound", repconvar="rep_ap_snd_scope", parent=panel, textcolor=color_black }
 --xlib.makecheckbox{ x=10, y=70, label="Allow Auto Demote", repconvar="ff", parent=panel, textcolor=color_black }
 
 // AP Group / Hour Setup

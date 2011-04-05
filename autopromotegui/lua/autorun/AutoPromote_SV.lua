@@ -6,29 +6,44 @@
 ------------------------------
 require( "glon" )
 local glonGroup = {};
+local set = {};
+local grp = {};
+glonGroup["set"] = set
+glonGroup["grp"] = grp
 
 local function loadAP()
 	if (!file.Exists("autoPromote/data.txt")) then
 		for k, v in pairs(ULib.ucl.groups) do
-			glonGroup[k] = -1
+			glonGroup["grp"][k] = -1
 		end
+		glonGroup["set"]["ap_enabled"] = 1
+		glonGroup["set"]["ap_snd_enabled"] = 1
+		glonGroup["set"]["ap_snd_scope"] = 1
 		file.Write("autoPromote/data.txt", glon.encode(glonGroup))
 	else 
 		glonGroup = glon.decode(file.Read( "autoPromote/data.txt" ))
 	end
-	ULib.replicatedWritableCvar("ap_enabled","rep_ap_enabled",GetConVarNumber( "ap_enabled" ),true,true,"xgui_svsettings")
-	ULib.replicatedWritableCvar("ap_voice_enabled","rep_ap_voice_enabled",GetConVarNumber( "ap_voice_enabled" ),true,true,"xgui_svsettings")
-	ULib.replicatedWritableCvar("ap_voice_scope","rep_ap_voice_scope",GetConVarNumber( "ap_voice_scope" ),true,true,"xgui_svsettings")
+	ULib.replicatedWritableCvar("ap_enabled","rep_ap_enabled", glonGroup["set"]["ap_enabled"],false,false,"xgui_svsettings")
+	ULib.replicatedWritableCvar("ap_snd_enabled","rep_ap_snd_enabled",glonGroup["set"]["ap_snd_enabled"] ,false,false,"xgui_svsettings")
+	ULib.replicatedWritableCvar("ap_snd_scope","rep_ap_snd_scope",glonGroup["set"]["ap_snd_scope"] ,false,false,"xgui_svsettings")
 end
 hook.Add( "InitPostEntity", "loadAPGUI", loadAP )
 
+function cVarChange( sv_cvar, cl_cvar, ply, old_val, new_val )
+	if ( sv_cvar =="ap_enabled" or sv_cvar=="ap_snd_enabled" or sv_cvar=="ap_snd_scope" ) then
+		glonGroup["set"][sv_cvar] = new_val
+		file.Write("autoPromote/data.txt", glon.encode(glonGroup))
+	end
+end
+hook.Add( "ULibReplicatedCvarChanged", "APGroupCVAR", cVarChange )
+
 local function PlayRankSound( ply )
-	if ( GetConVarNumber( "ap_voice_enabled" ) == 1) then
-		if ( GetConVarNumber( "ap_voice_scope" ) == 1 ) then
+	if ( GetConVarNumber( "ap_snd_enabled" ) == 1) then
+		if ( GetConVarNumber( "ap_snd_scope" ) == 1 ) then
 			for k, v in pairs(player.GetAll()) do
 				v:SendLua("surface.PlaySound( \"/garrysmod/save_load1.wav\" )")
 			end
-		elseif ( GetConVarNumber( "ap_voice_scope" ) == 0) then
+		elseif ( GetConVarNumber( "ap_snd_scope" ) == 0) then
 			ply:SendLua("surface.PlaySound( \"/garrysmod/save_load1.wav\" )")
 		end
 	end
@@ -46,9 +61,9 @@ local function isValidCommand( command, compare )
 end
 
 concommand.Add("APGroup", function( ply, cmd, args )
-	if (ply:IsSuperAdmin() and isValidCommand( args, glonGroup )) then
-		glonGroup[args[1]] = tonumber(args[2])
-		ULib.clientRPC( nil, "doApUpdate", glonGroup )
+	if (ply:IsSuperAdmin() and isValidCommand( args, glonGroup["grp"] )) then
+		glonGroup["grp"][args[1]] = tonumber(args[2])
+		ULib.clientRPC( nil, "doApUpdate", glonGroup["grp"])
 		file.Write("autoPromote/data.txt", glon.encode(glonGroup))
 	end
 end)
@@ -57,18 +72,18 @@ local function doApUpdate()
 	//for added groups
 	timer.Create("ysoghetto",2,1,function()
 		for k, v in pairs(ULib.ucl.groups) do
-			if ( glonGroup[k] == nil and k != "user") then
+			if ( glonGroup["grp"][k] == nil and k != "user") then
 				print("Added " .. k .. " to AutoPromote.")
-				glonGroup[k] = -1
+				glonGroup["grp"][k] = -1
 			end
 		end
-		for k, v in pairs(glonGroup) do
+		for k, v in pairs(glonGroup["grp"]) do
 			if ( k != nil and !ULib.ucl.groups[k]) or k == "user" then
 				print("Removed " .. k .. " from AutoPromote.")
-				glonGroup[k] = nil
+				glonGroup["grp"][k] = nil
 			end
 		end
-		ULib.clientRPC( nil , "doApUpdate", glonGroup )
+		ULib.clientRPC( nil , "doApUpdate", glonGroup["grp"] )
 	end)
 end
  
@@ -80,7 +95,7 @@ local Rank = ""
 local Hours = 0
 
 if(	ply:IsBot( ) or !ply:IsValid() ) then return end
-	for k, v in pairs(glonGroup) do 
+	for k, v in pairs(glonGroup["grp"]) do 
 		if ( plyhours >= tonumber(v) and tonumber(v) >= Hours) then
 			if (tonumber(v) >= 0) then
 				Rank = k
@@ -89,7 +104,7 @@ if(	ply:IsBot( ) or !ply:IsValid() ) then return end
 		end
 	end
 	if (!ply:IsUserGroup(Rank) and Rank != "") then
-		if (tonumber(glonGroup[ply:GetNWString("usergroup")]) != -1) then
+		if (tonumber(glonGroup["grp"][ply:GetNWString("usergroup")]) != -1) then
 			RunConsoleCommand("ulx", "adduser" , ply:Nick() , Rank)
 			PlayRankSound( ply );
 			return;
