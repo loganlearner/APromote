@@ -2,7 +2,7 @@
 // APromoteGUI by Lead4u    //
 // Mail: J_G_24@hotmail.com //
 // Steam: Lead4u2           //
-// Version: 1.2 Beta        //
+// Version: 1.3 Beta        //
 ------------------------------
 local APromote = {};
 local panel = xlib.makepanel{ parent=xgui.null }
