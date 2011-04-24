@@ -122,9 +122,11 @@ local Hours = 0
 			if (( GetConVarNumber("ap_auto_demote") == 0) and APromote["grp"][usrgrp] != nil and Hours < APromote["grp"][usrgrp]) then
 				return;
 			else
-				RunConsoleCommand("ulx", "adduser" , ply:Nick() , Rank)
-				PlayRankSound( ply );
-				return;
+				if ( ply:IsConnected() ) then 
+					RunConsoleCommand("ulx", "adduser" , ply:Nick() , Rank)
+					PlayRankSound( ply );
+					return;
+				end
 			end
 		end
 	end
