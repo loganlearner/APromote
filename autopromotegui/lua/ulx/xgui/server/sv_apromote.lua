@@ -134,7 +134,7 @@ end
 timer.Create("doAPUpdateTimer",10,0, function()
 if( GetConVarNumber( "ap_enabled" ) != 1) then return end
 	for k, v in pairs(player.GetAll()) do
-		if (v:IsPlayer() and v:IsValid()) then
+		if (v:IsPlayer() and v:IsValid() and !v:IsBot()) then
 			ULib.queueFunctionCall(	checkPlayer, v)
 		end
 	end
