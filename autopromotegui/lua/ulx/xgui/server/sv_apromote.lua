@@ -125,7 +125,6 @@ local Hours = 0
 				if ( ply:IsConnected() ) then 
 					RunConsoleCommand("ulx", "adduser" , ply:Nick() , Rank)
 					PlayRankSound( ply );
-					return;
 				end
 			end
 		end

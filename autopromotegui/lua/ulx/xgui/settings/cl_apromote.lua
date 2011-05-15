@@ -22,7 +22,7 @@ xlib.makelabel{ x = 333, y = 41, label = "Group Name: ", textcolor= color_white,
 local btn = xlib.makebutton {w=100, h=25, x = 400, y = 300, label="Apply", disabled=false, parent=panel}
 local num = xlib.makeslider{ parent=panel, label="Choose an hour to apply this rank.", x = 315, y = 75, decimal = 0, min= -1, max = 500, value= -1, w = 250, h = 20, textcolor= color_white}
 local dlist = xlib.makelistview{ x=145, y=5, w=150, h=327, parent=panel }
-xlib.makelabel{ x = 314, y = 160, w=250, h=30, wordwrap = true, label = "NOTE: To exclude a rank from auto promotion set its value to -1. ", textcolor= color_white, parent=panel}
+xlib.makelabel{ x = 314, y = 115, w=250, h=30, wordwrap = true, label = "NOTE: To exclude a rank from auto promotion set its value to -1. ", textcolor= color_white, parent=panel}
 	dlist:AddColumn( "Group" )
 	dlist:AddColumn( "Hours" )
 dlist.Columns[1].DoClick = function() end
