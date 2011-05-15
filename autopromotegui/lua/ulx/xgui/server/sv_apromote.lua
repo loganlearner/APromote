@@ -96,7 +96,7 @@ local function isValidCommand( command, compare )
 end
 
 concommand.Add("APGroup", function( ply, cmd, args )
-	if (ply:IsSuperAdmin() and isValidCommand( args, APromote["grp"] )) then
+	if (ply:query( "apromote_settings" ) and isValidCommand( args, APromote["grp"] )) then
 		APromote["grp"][args[1]] = tonumber(args[2])
 		xgui.sendDataTable( {}, "AP_SendData" )
 		file.Write("APromote/settings.txt", glon.encode(APromote))
