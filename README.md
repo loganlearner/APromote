@@ -1,6 +1,6 @@
 # APromote
 
-A promote automatically promotes users with ULX that fit a required amount of hours.
+APromote automatically promotes users with ULX that fit a required amount of hours.
 
 ## Credits
 Original Addon Created by: Lead4u - [Steam Profile](https://steamcommunity.com/id/lead4u2)
