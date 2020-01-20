@@ -7,7 +7,7 @@
 
 if ULib==nil or GetConVarString("utime_enable")=="" then print("WARNING: Missing dependancy UTime/ULX/ULib APromote is now inactive.") return end
 
-local APromote = {};
+local APromote = {}
 local panel = xlib.makepanel{ parent=xgui.null }
 xgui.prepareDataType( "AP_SendData", APromote)
 
@@ -66,6 +66,7 @@ end
 
 local function doApShinys( um )
     local ply = um:ReadEntity()
+
     em = ParticleEmitter(ply:GetPos())
         for i=0, 50 do
             local part = em:Add( "effects/spark", ply:GetPos() + VectorRand()*math.random(-30,30) + Vector(math.random(1,10),math.random(1,10),math.random(50,175)) )
