@@ -1,21 +1,21 @@
 ------------------------------
-// APromoteGUI by Lead4u    //
-// Mail: J_G_24@hotmail.com //
-// Steam: Lead4u2           //
-// Version: 1.3 Beta        //
+-- APromoteGUI by Lead4u    --
+-- Mail: J_G_24@hotmail.com --
+-- Steam: Lead4u2           --
+-- Version: 1.3 Beta        --
 ------------------------------
 local APromote = {};
 local panel = xlib.makepanel{ parent=xgui.null }
 xgui.prepareDataType( "AP_SendData", APromote)
 
-// AP Settings
+-- AP Settings
 local enabled = xlib.makecheckbox{ x=10, y=10, label="Enable", repconvar="rep_ap_enabled", parent=panel, textcolor=color_black }
 xlib.makecheckbox{ x=10, y=30, label="Play Sound", repconvar="rep_ap_snd_enabled", parent=panel, textcolor=color_black }
 xlib.makecheckbox{ x=25, y=50, label="Global Sound", repconvar="rep_ap_snd_scope", parent=panel, textcolor=color_black }
 xlib.makecheckbox{ x=10, y=70, label="Confetti", repconvar="rep_ap_effect_enabled", parent=panel, textcolor=color_black }
 xlib.makecheckbox{ x=10, y=90, label="Auto Demote", repconvar="rep_ap_auto_demote", parent=panel, textcolor=color_black }
 
-// AP Group / Hour Setup
+-- AP Group / Hour Setup
 local pinfo = xlib.makepanellist{ x=300, y=5, w=285, h=327, parent=panel }	
 local box = xlib.maketextbox{ x = 400, y=40, w=150, h = 20, parent=panel}
 xlib.makelabel{ x = 333, y = 41, label = "Group Name: ", textcolor= color_white, parent=panel}

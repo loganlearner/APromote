@@ -1,8 +1,8 @@
 ------------------------------
-// APromoteGUI by Lead4u    //
-// Mail: J_G_24@hotmail.com //
-// Steam: Lead4u2           //
-// Version: 1.3 Beta        //
+-- APromoteGUI by Lead4u    --
+-- Mail: J_G_24@hotmail.com --
+-- Steam: Lead4u2           --
+-- Version: 1.3 Beta        --
 ------------------------------
 require( "glon" )
 resource.AddFile("materials/gui/silkicons/cog.vmt")
@@ -15,7 +15,7 @@ local grp = {} APromote["grp"] = grp
 
 
 local function APUpdateGroups()
-	//for added groups
+	--for added groups
 		for k, v in pairs(ULib.ucl.groups) do
 			if ( APromote["grp"][k] == nil and k != "user") then
 				print("Added " .. k .. " to APromote.")
@@ -35,7 +35,7 @@ end
 local function loadAP()
 	xgui.addDataType( "AP_SendData", function() return APromote["grp"] end, "apromote_settings", 0, 0 )
 	
-// File Stuffs
+-- File Stuffs
 	if (!file.Exists("APromote/settings.txt")) then
 		for k, v in pairs(ULib.ucl.groups) do
 			APromote["grp"][k] = -1
@@ -49,13 +49,13 @@ local function loadAP()
 	else 
 		APromote = glon.decode(file.Read( "APromote/settings.txt" ))
 	end
-// ConVars
+-- ConVars
 	ULib.replicatedWritableCvar("ap_enabled","rep_ap_enabled", APromote["set"]["ap_enabled"],false,false,"apromote_settings")
 	ULib.replicatedWritableCvar("ap_snd_enabled","rep_ap_snd_enabled",APromote["set"]["ap_snd_enabled"] ,false,false,"apromote_settings")
 	ULib.replicatedWritableCvar("ap_snd_scope","rep_ap_snd_scope",APromote["set"]["ap_snd_scope"] ,false,false,"apromote_settings")
 	ULib.replicatedWritableCvar("ap_effect_enabled","rep_ap_effect_enabled",APromote["set"]["ap_effect_enabled"] ,false,false,"apromote_settings")
 	ULib.replicatedWritableCvar("ap_auto_demote","rep_ap_auto_demote",APromote["set"]["ap_auto_demote"] ,false,false,"apromote_settings")
-// Data and Hook Add	
+-- Data and Hook Add	
 	xgui.sendDataTable( {}, "AP_SendData" )
 	hook.Add( "UCLChanged", "doApUpdateSV", APUpdateGroups )
 end
