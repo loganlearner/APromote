@@ -15,4 +15,4 @@ Extract this file into your `<garrysmod>/addons/` folder.
 
 The resulting file structure should be as follows:
 
-`<garrysmod>/addons/apromotegui`
+`<garrysmod>/addons/APromote`
