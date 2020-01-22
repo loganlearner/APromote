@@ -1,6 +1,6 @@
-if ULib == nil or GetConVarString( "utime_welcome" ) == "" then 
-    print( "WARNING: Missing dependancy UTime/ULX/ULib APromote is now inactive." ) 
-    return 
+if ULib == nil or GetConVarString( "utime_welcome" ) == "" then
+    print( "WARNING: Missing dependancy UTime/ULX/ULib APromote is now inactive." )
+    return
 end
 
 resource.AddFile( "materials/gui/silkicons/cog.vmt" )
@@ -8,9 +8,11 @@ resource.AddFile( "materials/gui/silkicons/cog.vtf" )
 ULib.ucl.registerAccess( "apromote_settings", "superadmin", "Allows managing all settings related to APromote.", "XGUI" )
 
 dencoder = {}
+
 dencoder.encode = function( tbl )
     return util.TableToJSON( tbl )
 end
+
 dencoder.decode = function( tbl )
     return util.JSONToTable( tbl )
 end
@@ -20,7 +22,7 @@ local APromote = {}
 local set = {}
 Promote["set"] = set
 
-local grp = {} 
+local grp = {}
 APromote["grp"] = grp
 
 
@@ -64,13 +66,14 @@ local function loadAP()
     else 
         APromote = dencoder.decode( file.Read( "apromote/settings.txt" ) )
     end
+
     -- ConVars
     ULib.replicatedWritableCvar( "ap_enabled", "rep_ap_enabled", APromote["set"]["ap_enabled"], false, false, "apromote_settings" )
     ULib.replicatedWritableCvar( "ap_snd_enabled", "rep_ap_snd_enabled", APromote["set"]["ap_snd_enabled"], false, false, "apromote_settings" )
     ULib.replicatedWritableCvar( "ap_snd_scope", "rep_ap_snd_scope", APromote["set"]["ap_snd_scope"], false, false, "apromote_settings" )
     ULib.replicatedWritableCvar( "ap_effect_enabled", "rep_ap_effect_enabled", APromote["set"]["ap_effect_enabled"], false, false,"apromote_settings" )
     ULib.replicatedWritableCvar( "ap_auto_demote", "rep_ap_auto_demote", APromote["set"]["ap_auto_demote"], false, false, "apromote_settings" )
-    -- Data and Hook Add    
+    -- Data and Hook Add
     xgui.sendDataTable( {}, "AP_SendData" )
     hook.Add( "UCLChanged", "doApUpdateSV", APUpdateGroups )
 end
@@ -102,7 +105,7 @@ end
 local function isValidCommand( command, compare )
     for k, v in pairs( compare ) do
         if command[1] == k then
-            if type( command[2] ) == "number"  then
+            if type( command[2] ) == "number" then
                 return true
             end
         end
@@ -119,13 +122,13 @@ concommand.Add( "APGroup", function( ply, cmd, args )
     end
 end)
  
-local function checkPlayer( ply ) 
+local function checkPlayer( ply )
     local plyhours = tonumber( math.floor( ( ply:GetUTime() + CurTime() - ply:GetUTimeStart() ) / 60 / 60 ) )
     local usrgrp = ply:GetNWString( "usergroup" )
     local Rank = ""
     local Hours = 0
 
-    for k, v in pairs( APromote["grp"] ) do 
+    for k, v in pairs( APromote["grp"] ) do
         if plyhours >= tonumber( v ) and tonumber( v ) >= Hours then
             if tonumber( v ) >= 0 then
                 Rank = k

@@ -1,6 +1,6 @@
-if ULib == nil or GetConVarString( "utime_enable" ) == "" then 
-    print( "WARNING: Missing dependancy UTime/ULX/ULib APromote is now inactive." ) 
-    return 
+if ULib == nil or GetConVarString( "utime_enable" ) == "" then
+    print( "WARNING: Missing dependancy UTime/ULX/ULib APromote is now inactive." )
+    return
 end
 
 local APromote = {}
@@ -15,7 +15,7 @@ xlib.makecheckbox{ x=10, y=70, label="Confetti", repconvar="rep_ap_effect_enable
 xlib.makecheckbox{ x=10, y=90, label="Auto Demote", repconvar="rep_ap_auto_demote", parent=panel, textcolor=color_black }
 
 -- AP Group / Hour Setup
---local pinfo = xlib.makepanellist{ x=300, y=5, w=285, h=327, parent=panel }    
+--local pinfo = xlib.makepanellist{ x=300, y=5, w=285, h=327, parent=panel }
 local box = xlib.maketextbox{ x = 400, y=40, w=150, h = 20, parent=panel}
 xlib.makelabel{ x = 333, y = 41, label = "Group Name: ", textcolor= color_black, parent=panel}
 local btn = xlib.makebutton {w=100, h=25, x = 400, y = 300, label="Apply", disabled=false, parent=panel}
@@ -39,8 +39,8 @@ dlist.OnRowSelected = function( self, LineID, Line )
     end
 end
 
-btn.DoClick = function() 
-    if box:GetValue() and num:GetValue() then 
+btn.DoClick = function()
+    if box:GetValue() and num:GetValue() then
         RunConsoleCommand( "APGroup", box:GetValue(), num:GetValue() )
     end
 end
@@ -78,7 +78,7 @@ local function doApShinys( um )
             part:SetEndSize( 0 )
             part:SetGravity( Vector( 0, 0, -250 ) )
             part:SetRoll( math.Rand( 0, 360 ) )
-            part:SetRollDelta( math.Rand( -7, 7 ) )    
+            part:SetRollDelta( math.Rand( -7, 7 ) )
             part:SetStartAlpha( math.Rand( 80, 250 ) )
             part:SetStartSize( math.Rand( 6, 12 ) )
             part:SetVelocity( VectorRand() * 75 )
