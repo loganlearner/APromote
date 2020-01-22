@@ -5,11 +5,14 @@
 -- Date:    "01/20/2015"       --
 ---------------------------------
 
-if ULib==nil or GetConVarString("utime_enable")=="" then print("WARNING: Missing dependancy UTime/ULX/ULib APromote is now inactive.") return end
+if ULib == nil or GetConVarString( "utime_enable" ) == "" then 
+    print( "WARNING: Missing dependancy UTime/ULX/ULib APromote is now inactive." ) 
+    return 
+end
 
 local APromote = {}
 local panel = xlib.makepanel{ parent=xgui.null }
-xgui.prepareDataType( "AP_SendData", APromote)
+xgui.prepareDataType( "AP_SendData", APromote )
 
 -- AP Settings
 local enabled = xlib.makecheckbox{ x=10, y=10, label="Enable", repconvar="rep_ap_enabled", parent=panel, textcolor=color_black }
@@ -34,59 +37,62 @@ box:SetEditable( false )
 --pinfo:AddItem( xlib.makelabel{ label="Hourly Settings", textcolor= color_black } )
 
 dlist.OnRowSelected = function( self, LineID, Line )
-    box:SetValue(Line:GetValue(1))
+    box:SetValue( Line:GetValue( 1 ) )
     
-    if(Line:GetValue(2) == "(Excluded)") then
-        num:SetValue(-1)
+    if Line:GetValue( 2 ) == "(Excluded)" then
+        num:SetValue( -1 )
     else
-        num:SetValue(Line:GetValue(2))
+        num:SetValue( Line:GetValue( 2 ) )
     end
 end
 
 btn.DoClick = function() 
-    if (box:GetValue() and num:GetValue()) then 
-        RunConsoleCommand("APGroup", box:GetValue(), num:GetValue())
+    if box:GetValue() and num:GetValue() then 
+        RunConsoleCommand( "APGroup", box:GetValue(), num:GetValue() )
     end
 end
         
 local function doApUpdate()
-    dlist:Clear()   
-        for k, v in pairs(APromote) do
-            if( tonumber(v) != -1) then
-                dlist:AddLine( k, tonumber(v) )
-            end
+    dlist:Clear()
+
+    for k, v in pairs( APromote ) do
+        if tonumber( v ) ~= -1 then
+            dlist:AddLine( k, tonumber( v ) )
         end
-            dlist:SortByColumn( 2, true )
-        for k, v in pairs(APromote) do
-            if (tonumber(v) <= -1) then
-                dlist:AddLine( k, "(Excluded)" )
-            end
+    end
+
+    dlist:SortByColumn( 2, true )
+
+    for k, v in pairs( APromote ) do
+        if tonumber( v ) <= -1 then
+            dlist:AddLine( k, "(Excluded)" )
         end
+    end
 end 
 
 local function doApShinys( um )
     local ply = um:ReadEntity()
 
-    em = ParticleEmitter(ply:GetPos())
+    em = ParticleEmitter( ply:GetPos() )
         for i=0, 50 do
-            local part = em:Add( "effects/spark", ply:GetPos() + VectorRand()*math.random(-30,30) + Vector(math.random(1,10),math.random(1,10),math.random(50,175)) )
+            local part = em:Add( "effects/spark", ply:GetPos() + VectorRand() * math.random( -30, 30 ) + Vector( math.random( 1, 10 ), math.random( 1, 10 ), math.random( 50, 175 ) ) )
             part:SetAirResistance( 100 )
             part:SetBounce( 0.3 )
             part:SetCollide( true )
-            part:SetColor( math.random(10,250),math.random(10,250),math.random(10,250),255 )
+            part:SetColor( math.random( 10, 250 ), math.random( 10, 250 ), math.random( 10, 250 ), 255 )
             part:SetDieTime( 2 )
             part:SetEndAlpha( 0 )
             part:SetEndSize( 0 )
             part:SetGravity( Vector( 0, 0, -250 ) )
-            part:SetRoll( math.Rand(0, 360) )
-            part:SetRollDelta( math.Rand(-7,7) )    
+            part:SetRoll( math.Rand( 0, 360 ) )
+            part:SetRollDelta( math.Rand( -7, 7 ) )    
             part:SetStartAlpha( math.Rand( 80, 250 ) )
-            part:SetStartSize( math.Rand(6,12) )
+            part:SetStartSize( math.Rand( 6, 12 ) )
             part:SetVelocity( VectorRand() * 75 )
         end
     em:Finish()
 end
 
-usermessage.Hook("doApShinys", doApShinys)
+usermessage.Hook( "doApShinys", doApShinys )
 xgui.hookEvent( "AP_SendData", "process", doApUpdate )
 xgui.addSettingModule( "APromote", panel, "gui/silkicons/cog", "apromote_settings" )
