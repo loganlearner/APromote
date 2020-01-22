@@ -1,4 +1,3 @@
-
 if ULib == nil or GetConVarString( "utime_welcome" ) == "" then 
     print( "WARNING: Missing dependancy UTime/ULX/ULib APromote is now inactive." ) 
     return 
