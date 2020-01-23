@@ -18,7 +18,7 @@ end
 local APromote = {}
 
 local set = {}
-Promote["set"] = set
+APromote["set"] = set
 
 local grp = {}
 APromote["grp"] = grp
@@ -26,10 +26,10 @@ APromote["grp"] = grp
 
 local function APUpdateGroups()
     --for added groups
-    for k, v in pairs( ULib.ucl.groups ) do
-        if APromote["grp"][k] == nil and k ~= "user" then
-            print( "Added " .. k .. " to APromote." )
-            APromote["grp"][k] = -1
+    for group, _ in pairs( ULib.ucl.groups ) do
+        if APromote["grp"][group] ~= nil and group ~= "user" then
+            print( "Added " .. group .. " to APromote." )
+            APromote["grp"][group] = -1
         end
     end
 

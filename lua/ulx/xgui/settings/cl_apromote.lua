@@ -13,7 +13,7 @@ xlib.makecheckbox{ x=25, y=50, label="Global Sound", repconvar="rep_ap_snd_scope
 xlib.makecheckbox{ x=10, y=70, label="Confetti", repconvar="rep_ap_effect_enabled", parent=panel, textcolor=color_black }
 xlib.makecheckbox{ x=10, y=90, label="Auto Demote", repconvar="rep_ap_auto_demote", parent=panel, textcolor=color_black }
 
-local dlist = xlib.makelistview{ x=145, y=5, w=150, h=295, parent=panel }
+local dlist = xlib.makelistview{ x=145, y=5, w=150, h=320, parent=panel }
 dlist:AddColumn( "Group" )
 dlist:AddColumn( "Hours" )
 
@@ -85,4 +85,4 @@ end
 
 usermessage.Hook( "doApShinys", doApShinys )
 xgui.hookEvent( "AP_SendData", "process", doApUpdate )
-xgui.addSettingModule( "APromote", panel, "icon16/cog.png" )
+xgui.addSettingModule( "APromote", panel, "icon16/cog.png", "apromote_settings" )
