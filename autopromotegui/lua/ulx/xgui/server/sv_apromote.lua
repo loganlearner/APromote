@@ -3,8 +3,6 @@ if ULib == nil or GetConVarString( "utime_welcome" ) == "" then
     return
 end
 
-resource.AddFile( "materials/gui/silkicons/cog.vmt" )
-resource.AddFile( "materials/gui/silkicons/cog.vtf" )
 ULib.ucl.registerAccess( "apromote_settings", "superadmin", "Allows managing all settings related to APromote.", "XGUI" )
 
 dencoder = {}
