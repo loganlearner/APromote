@@ -7,27 +7,24 @@ local APromote = {}
 local panel = xlib.makepanel{ parent=xgui.null }
 xgui.prepareDataType( "AP_SendData", APromote )
 
--- AP Settings
 local enabled = xlib.makecheckbox{ x=10, y=10, label="Enable", repconvar="rep_ap_enabled", parent=panel, textcolor=color_black }
 xlib.makecheckbox{ x=10, y=30, label="Play Sound", repconvar="rep_ap_snd_enabled", parent=panel, textcolor=color_black }
 xlib.makecheckbox{ x=25, y=50, label="Global Sound", repconvar="rep_ap_snd_scope", parent=panel, textcolor=color_black }
 xlib.makecheckbox{ x=10, y=70, label="Confetti", repconvar="rep_ap_effect_enabled", parent=panel, textcolor=color_black }
 xlib.makecheckbox{ x=10, y=90, label="Auto Demote", repconvar="rep_ap_auto_demote", parent=panel, textcolor=color_black }
 
--- AP Group / Hour Setup
---local pinfo = xlib.makepanellist{ x=300, y=5, w=285, h=327, parent=panel }
-local box = xlib.maketextbox{ x = 400, y=40, w=150, h = 20, parent=panel}
-xlib.makelabel{ x = 333, y = 41, label = "Group Name: ", textcolor= color_black, parent=panel}
-local btn = xlib.makebutton {w=100, h=25, x = 400, y = 300, label="Apply", disabled=false, parent=panel}
-local num = xlib.makeslider{ parent=panel, label="Choose an hour to apply this rank.", x = 315, y = 75, decimal = 0, min= -1, max = 500, value= -1, w = 250, h = 20, textcolor= color_black}
-local dlist = xlib.makelistview{ x=145, y=5, w=150, h=327, parent=panel }
-xlib.makelabel{ x = 314, y = 115, w=250, h=30, wordwrap = true, label = "NOTE: To exclude a rank from auto promotion set its value to -1. ", textcolor= color_black, parent=panel}
-    dlist:AddColumn( "Group" )
-    dlist:AddColumn( "Hours" )
-dlist.Columns[1].DoClick = function() end
-dlist.Columns[2].DoClick = function() end
+local dlist = xlib.makelistview{ x=145, y=5, w=150, h=295, parent=panel }
+dlist:AddColumn( "Group" )
+dlist:AddColumn( "Hours" )
+
+xlib.makelabel{ x=333, y=41, label="Group Name: ", textcolor=color_black, parent=panel }
+
+local num = xlib.makeslider{ parent=panel, label="Choose an hour to apply this rank.", x=315, y=75, decimal=0, min=-1, max=500, value=-1, w=250, h=20, textcolor=color_black }
+local box = xlib.maketextbox{ x=400, y=40, w=150, h=20, parent=panel }
 box:SetEditable( false )
---pinfo:AddItem( xlib.makelabel{ label="Hourly Settings", textcolor= color_black } )
+
+xlib.makelabel{ x=314, y=115, w=250, h=30, wordwrap=true, label="NOTE: To exclude a rank from auto promotion set its value to -1.", textcolor=color_black, parent=panel }
+local btn = xlib.makebutton{ w=100, h=25, x=400, y=300, label="Apply", disabled=false, parent=panel }
 
 dlist.OnRowSelected = function( self, LineID, Line )
     box:SetValue( Line:GetValue( 1 ) )
