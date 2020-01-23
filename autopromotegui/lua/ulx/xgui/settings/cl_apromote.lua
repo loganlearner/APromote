@@ -85,4 +85,4 @@ end
 
 usermessage.Hook( "doApShinys", doApShinys )
 xgui.hookEvent( "AP_SendData", "process", doApUpdate )
-xgui.addSettingModule( "APromote", panel, "gui/silkicons/cog", "apromote_settings" )
+xgui.addSettingModule( "APromote", panel, "icon16/cog.png", "apromote_settings" )
